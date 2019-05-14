@@ -8,6 +8,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TerminalModule} from 'primeng/terminal';
 import {TerminalService} from 'primeng/components/terminal/terminalservice';
 
+import 'rxjs';
 
 @NgModule({
   declarations: [
