@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { TerminalService } from 'primeng/components/terminal/terminalservice';
-import { SocketService } from '../../util/service/socket.service';
+import { MessageSocketService } from '../../util/service/message.socket.service';
 import { MessagesUtil } from '../../util/messages.util';
 import { ACTION_COMMAND } from '../../command/command-list';
+import { UserService } from '../../util/service/user.service';
+import { BuildMessage } from '../../interface/message.interface';
 
 @Component({
   selector: 'app-terminal',
@@ -13,19 +15,17 @@ export class BashComponent implements OnInit {
 
   constructor(
     private terminalService: TerminalService,
-    private socketService: SocketService,
+    private socketService: MessageSocketService,
+    private userService: UserService,
   ) { }
 
   public ngOnInit(): void {
-    this.user = localStorage.getItem('user');
+    this.user = this.userService.user;
 
     this.terminalService.commandHandler.subscribe(command => this.onCommand(command));
-    this.socketService.getMessage().subscribe(res => {
-      console.log('RES: ', res);
-    });
   }
 
-  public onCommand(input: string): void {
+  private onCommand(input: string): void {
     if (!this.isCommandoValid(this.getCommand(input))) return;
     this.applyCommand(input);
   }
@@ -34,7 +34,7 @@ export class BashComponent implements OnInit {
     const command = this.getCommand(input);
 
     if (!ACTION_COMMAND.hasOwnProperty(command)) {
-      this.terminalService.sendResponse(MessagesUtil.COMMAND_NOT_FOUND(command))
+      this.terminalService.sendResponse(MessagesUtil.COMMAND_NOT_FOUND(command));
       return false;
     }
 
@@ -46,7 +46,8 @@ export class BashComponent implements OnInit {
     const args = this.getArgs(input);
 
     if (command === 'user') {
-      this.user = ACTION_COMMAND.user(args);
+      this.userService.user = args;
+      this.user = this.userService.user;
       return;
     }
 
@@ -57,7 +58,7 @@ export class BashComponent implements OnInit {
 
     switch (command) {
       case('msg'):
-        this.socketService.sendMessage(args);
+        this.socketService.sendMessage(BuildMessage(args));
         break;
       default:
         break;

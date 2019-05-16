@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { TerminalService } from 'primeng/components/terminal/terminalservice';
 import { SocketIoModule } from 'ngx-socket-io';
 import { socketConfig } from '../../config/socket.config';
-import { SocketService } from '../../util/service/socket.service';
+import { MessageSocketService } from '../../util/service/message.socket.service';
 
 @NgModule({
   imports: [
@@ -20,7 +20,7 @@ import { SocketService } from '../../util/service/socket.service';
   ],
   providers: [
     TerminalService,
-    SocketService,
+    MessageSocketService,
   ],
 })
 export class BashModule { }
