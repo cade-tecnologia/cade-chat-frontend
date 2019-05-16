@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { Observable } from 'rxjs';
 import { Message } from '../../interface/message.interface';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class MessageSocketService {
@@ -13,7 +13,8 @@ export class MessageSocketService {
     this.socket.emit('receiveMessage', msg);
   }
 
-  public getAllMessage(): Observable<string> {
-    return this.socket.fromEvent('sendAllMessage')
+  public getAllMessage(): Observable<Message[]> {
+    this.socket.emit('getAllMessage');
+    return this.socket.fromEvent<Message[]>('receiveAllMessage')
   }
 }

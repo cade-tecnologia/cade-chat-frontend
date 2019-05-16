@@ -4,7 +4,7 @@ import { MessageSocketService } from '../../util/service/message.socket.service'
 import { MessagesUtil } from '../../util/messages.util';
 import { ACTION_COMMAND } from '../../command/command-list';
 import { UserService } from '../../util/service/user.service';
-import { BuildMessage } from '../../interface/message.interface';
+import { BuildMessage, Message } from '../../interface/message.interface';
 
 @Component({
   selector: 'app-terminal',
@@ -12,6 +12,8 @@ import { BuildMessage } from '../../interface/message.interface';
 })
 export class BashComponent implements OnInit {
   public user: string;
+  public isChatEnable: boolean = false;
+  public oldMsg: Message[] = [] as Message[];
 
   constructor(
     private terminalService: TerminalService,
@@ -56,15 +58,22 @@ export class BashComponent implements OnInit {
       return;
     }
 
+    this.executeCommand(command, args);
+  }
+
+  private executeCommand(command: string, args: string): void {
     switch (command) {
       case('msg'):
         this.socketService.sendMessage(BuildMessage(args));
+        break;
+      case('chat'):
+        this.socketService.getAllMessage().subscribe(res => this.oldMsg = res);
+        this.isChatEnable = true;
         break;
       default:
         break;
     }
   }
-
   private getCommand(input: string): string {
     return input.split( ' ')[0]
   }

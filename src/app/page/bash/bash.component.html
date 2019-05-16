@@ -1,1 +1,8 @@
-<p-terminal [prompt]="user + ' $'"></p-terminal>
+<div class="ui-fluid">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <p-terminal [prompt]="user + ' $ '"></p-terminal>
+    </div>
+  </div>
+</div>
+    <app-chat *ngIf="isChatEnable" [oldMessage]="oldMsg"></app-chat>
