@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TerminalService } from 'primeng/components/terminal/terminalservice';
 import { MessageSocketService } from '../../util/service/message.socket.service';
 import { MessagesUtil } from '../../util/messages.util';
 import { ACTION_COMMAND } from '../../command/command-list';
 import { UserService } from '../../util/service/user.service';
-import { BuildMessage, Message } from '../../interface/message.interface';
+import { BuildMessage } from '../../interface/message.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-terminal',
   templateUrl: './bash.component.html',
 })
-export class BashComponent implements OnInit {
+export class BashComponent implements OnInit, OnDestroy {
   public user: string;
   public isChatEnable: boolean = false;
-  public oldMsg: Message[] = [] as Message[];
+  public clear: boolean = true;
+  private subscription: Subscription[] = [] as Subscription[];
 
   constructor(
     private terminalService: TerminalService,
@@ -24,7 +26,19 @@ export class BashComponent implements OnInit {
   public ngOnInit(): void {
     this.user = this.userService.user;
 
-    this.terminalService.commandHandler.subscribe(command => this.onCommand(command));
+    this.subscription.push(
+      this.terminalService.commandHandler.subscribe(command => this.onCommand(command))
+    );
+  }
+
+  public ngOnDestroy(): void {
+    this.subscription.forEach(item => item.unsubscribe());
+  }
+
+  public clearBash(): void {
+    console.log('CTRL + L');
+    this.clear = false;
+    setTimeout(() => this.clear = true, 200);
   }
 
   private onCommand(input: string): void {
@@ -42,7 +56,6 @@ export class BashComponent implements OnInit {
 
     return true;
   }
-
   private applyCommand(input: string): void {
     const command = this.getCommand(input);
     const args = this.getArgs(input);
@@ -67,13 +80,16 @@ export class BashComponent implements OnInit {
         this.socketService.sendMessage(BuildMessage(args));
         break;
       case('chat'):
-        this.socketService.getAllMessage().subscribe(res => this.oldMsg = res);
         this.isChatEnable = true;
+        break;
+      case('cl'):
+        this.clearBash();
         break;
       default:
         break;
     }
   }
+
   private getCommand(input: string): string {
     return input.split( ' ')[0]
   }
