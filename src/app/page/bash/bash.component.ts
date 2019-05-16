@@ -27,7 +27,7 @@ export class BashComponent implements OnInit, OnDestroy {
     this.user = this.userService.user;
 
     this.subscription.push(
-      this.terminalService.commandHandler.subscribe(command => this.onCommand(command))
+      this.terminalService.commandHandler.subscribe(command => this.onCommand(command)),
     );
   }
 
@@ -36,9 +36,10 @@ export class BashComponent implements OnInit, OnDestroy {
   }
 
   public clearBash(): void {
-    console.log('CTRL + L');
     this.clear = false;
-    setTimeout(() => this.clear = true, 200);
+    setTimeout(() => {
+      this.clear = true;
+    }, 50);
   }
 
   private onCommand(input: string): void {

@@ -11,6 +11,7 @@ import {
   ScrollPanelModule,
 } from 'primeng/primeng';
 import { ChatModule } from '../../shared/shared-component/chat/chat.module';
+import { DirectiveModule } from '../../shared/directive/directive.module';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { ChatModule } from '../../shared/shared-component/chat/chat.module';
     SocketIoModule.forRoot(socketConfig),
     RouterModule.forChild([{ path: '', component: BashComponent }]),
     ChatModule,
+    DirectiveModule,
   ],
   declarations: [
     BashComponent,
