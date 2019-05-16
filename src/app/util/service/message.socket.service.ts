@@ -13,6 +13,10 @@ export class MessageSocketService {
     this.socket.emit('receiveMessage', msg);
   }
 
+  public getMessage(): Observable<Message[]> {
+    return this.socket.fromEvent<Message[]>('receiveAllMessage')
+  }
+
   public getAllMessage(): Observable<Message[]> {
     this.socket.emit('getAllMessage');
     return this.socket.fromEvent<Message[]>('receiveAllMessage')
