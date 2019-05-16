@@ -11,6 +11,16 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es5",
+
+
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+
     "typeRoots": [
       "node_modules/@types"
     ],
