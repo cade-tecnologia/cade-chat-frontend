@@ -79,15 +79,13 @@ export class BashComponent implements OnInit, OnDestroy {
     switch (command) {
       case('msg'):
         this.socketService.sendMessage(BuildMessage(args));
+        this.clearBash();
         break;
       case('chat'):
         this.isChatEnable = true;
         break;
       case('chat -c'):
         this.isChatEnable = false;
-        break;
-      case('cl'):
-        this.clearBash();
         break;
       default:
         break;
