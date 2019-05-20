@@ -83,11 +83,10 @@ export class BashComponent implements OnInit, OnDestroy {
         break;
       case('chat'):
         this.isChatEnable = true;
-        this.clearBash();
         break;
-      // case('cl'):
-      //   this.clearBash();
-      //   break;
+      case('chat -c'):
+        this.isChatEnable = false;
+        break;
       default:
         break;
     }

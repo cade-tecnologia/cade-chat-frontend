@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Message } from '../../../interface/message.interface';
-import { MessageSocketService } from '../../../util/service/message.socket.service';
+import { Socket } from 'ngx-socket-io';
 
 @Component({
   selector: 'app-chat',
@@ -10,15 +10,12 @@ export class ChatComponent implements OnInit {
   public message: Message[] = [] as Message[];
 
   constructor(
-    private socketService: MessageSocketService,
+    private socket: Socket,
   ) { }
 
   public ngOnInit(): void {
-    this.socketService.getAllMessage().subscribe(res => {
-      this.message = res
-      console.log(this.message);
-    });
-    this.socketService.getMessage().subscribe(res => this.message = res);
+    this.socket.on('sendMessage', (socket: Message) => {
+      this.message.push(socket)
+    })
   }
-
 }
