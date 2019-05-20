@@ -11,8 +11,12 @@
   background-color: #000000 !important;
   color: #0aff0a !important;
   border: 1px solid #000000 !important;
-  height: 20em !important;
+  height: 5vh !important;
   overflow-y: hidden !important;
+}
+
+.positionTerminal {
+  margin-bottom: 0vh;
 }
 
 .ui-terminal-content-prompt {
@@ -24,8 +28,8 @@
 }
 
 html {
-  overflow-y: hidden;
   background-color: #000000;
+  height: 100vh;
 }
 
 body::-webkit-scrollbar-track {

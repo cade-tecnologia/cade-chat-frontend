@@ -14,7 +14,10 @@ export class ChatComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.socketService.getAllMessage().subscribe(res => this.message = res);
+    this.socketService.getAllMessage().subscribe(res => {
+      this.message = res
+      console.log(this.message);
+    });
     this.socketService.getMessage().subscribe(res => this.message = res);
   }
 
