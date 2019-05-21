@@ -7,6 +7,7 @@ import { Socket } from 'ngx-socket-io';
   templateUrl: './chat.component.html',
 })
 export class ChatComponent implements OnInit {
+
   public message: Message[] = [] as Message[];
 
   constructor(
@@ -16,6 +17,16 @@ export class ChatComponent implements OnInit {
   public ngOnInit(): void {
     this.socket.on('sendMessage', (socket: Message) => {
       this.message.push(socket)
-    })
+      this.notificationMessager(socket);
+    });
   }
+
+  private notificationMessager(socket: Message): void {
+
+    const date = new Date();
+
+    socket.user.valueOf() !== window.localStorage.getItem('user') ?
+      new Notification(`[${socket.user}-${date.getHours()}:${date.getMinutes()}]-${socket.message}`) : null;
+  }
+
 }

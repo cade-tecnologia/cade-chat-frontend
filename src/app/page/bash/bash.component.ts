@@ -18,9 +18,9 @@ export class BashComponent implements OnInit, OnDestroy {
   private subscription: Subscription[] = [] as Subscription[];
 
   constructor(
-    private terminalService: TerminalService,
-    private socketService: MessageSocketService,
-    private userService: UserService,
+    private terminalService?: TerminalService,
+    private socketService?: MessageSocketService,
+    private userService?: UserService,
   ) { }
 
   public ngOnInit(): void {
@@ -77,15 +77,12 @@ export class BashComponent implements OnInit, OnDestroy {
 
   private executeCommand(command: string, args: string): void {
     switch (command) {
-      case('msg'):
+      case ('msg'):
         this.socketService.sendMessage(BuildMessage(args));
         this.clearBash();
         break;
-      case('chat'):
+      case ('chat'):
         this.isChatEnable = true;
-        break;
-      case('chat -c'):
-        this.isChatEnable = false;
         break;
       default:
         break;
@@ -93,7 +90,7 @@ export class BashComponent implements OnInit, OnDestroy {
   }
 
   private getCommand(input: string): string {
-    return input.split( ' ')[0]
+    return input.split(' ')[0]
   }
 
   private getArgs(input: string): string {
