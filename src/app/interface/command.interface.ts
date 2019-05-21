@@ -3,5 +3,4 @@ export interface Command {
   msg: string;
   chat: string;
   cl: string;
-  c: string;
 }
