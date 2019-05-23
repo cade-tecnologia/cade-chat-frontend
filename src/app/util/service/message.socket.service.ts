@@ -1,24 +1,20 @@
 import { Injectable } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
 import { Message } from '../../interface/message.interface';
+import SocketEventUtil from '../socket-event.util';
+import { SocketService } from './socket.service';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class MessageSocketService {
   constructor(
-    private socket: Socket,
+    private socketService: SocketService,
   ) { }
 
-  public sendMessage(msg: Message): void {
-    this.socket.emit('receiveMessage', msg);
+  public sendMessage(msg: Message): Observable<any> {
+    return this.socketService.emit(SocketEventUtil.RECEIVE, msg);
   }
 
-  public getMessage(): Observable<Message[]> {
-    return this.socket.fromEvent<Message[]>('receiveAllMessage')
-  }
-
-  public getAllMessage(): Observable<Message[]> {
-    this.socket.emit('getAllMessage');
-    return this.socket.fromEvent<Message[]>('receiveAllMessage')
+  public getRecentMessage(): Observable<Message> {
+    return this.socketService.on<Message>(SocketEventUtil.RECENT_MESSAGE)
   }
 }

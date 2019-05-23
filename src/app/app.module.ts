@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserService } from './util/service/user.service';
+import { SocketIoModule } from 'ngx-socket-io';
+import { socketConfig } from './config/socket.config';
+import { SocketService } from './util/service/socket.service';
 
 @NgModule({
   declarations: [
@@ -12,8 +15,9 @@ import { UserService } from './util/service/user.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    SocketIoModule.forRoot(socketConfig),
   ],
-  providers: [UserService],
+  providers: [UserService, SocketService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

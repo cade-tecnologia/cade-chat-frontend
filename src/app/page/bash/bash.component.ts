@@ -18,9 +18,9 @@ export class BashComponent implements OnInit, OnDestroy {
   private subscription: Subscription[] = [] as Subscription[];
 
   constructor(
-    private terminalService?: TerminalService,
-    private socketService?: MessageSocketService,
-    private userService?: UserService,
+    private messageService: MessageSocketService,
+    private userService: UserService,
+    private terminalService: TerminalService,
   ) { }
 
   public ngOnInit(): void {
@@ -78,7 +78,9 @@ export class BashComponent implements OnInit, OnDestroy {
   private executeCommand(command: string, args: string): void {
     switch (command) {
       case ('msg'):
-        this.socketService.sendMessage(BuildMessage(args));
+        this.subscription.push(
+          this.messageService.sendMessage(BuildMessage(args)).subscribe(),
+        );
         this.clearBash();
         break;
       case ('chat'):

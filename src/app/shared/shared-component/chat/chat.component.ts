@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Message } from '../../../interface/message.interface';
-import { Socket } from 'ngx-socket-io';
+import { MessageSocketService } from '../../../util/service/message.socket.service';
 
 @Component({
   selector: 'app-chat',
@@ -11,18 +11,17 @@ export class ChatComponent implements OnInit {
   public message: Message[] = [] as Message[];
 
   constructor(
-    private socket: Socket,
+    private messageService: MessageSocketService,
   ) { }
 
   public ngOnInit(): void {
-    this.socket.on('sendMessage', (socket: Message) => {
-      this.message.push(socket)
-      this.notificationMessager(socket);
+    this.messageService.getRecentMessage().subscribe(res => {
+      this.message.push(res);
+      this.notificationMessager(res)
     });
   }
 
   private notificationMessager(socket: Message): void {
-
     const date = new Date();
 
     // tslint:disable-next-line:no-unused-expression
