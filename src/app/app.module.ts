@@ -7,15 +7,17 @@ import { UserService } from './util/service/user.service';
 import { SocketIoModule } from 'ngx-socket-io';
 import { socketConfig } from './config/socket.config';
 import { SocketService } from './util/service/socket/socket.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     SocketIoModule.forRoot(socketConfig),
+  ],
+  declarations: [
+    AppComponent,
   ],
   providers: [UserService, SocketService],
   bootstrap: [AppComponent],

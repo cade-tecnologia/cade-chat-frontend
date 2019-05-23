@@ -4,8 +4,9 @@ import { MessageSocketService } from '../../util/service/socket/message.socket.s
 import { MessagesUtil } from '../../util/messages.util';
 import { ACTION_COMMAND } from '../../command/command-list';
 import { UserService } from '../../util/service/user.service';
-import { BuildMessage } from '../../interface/message.interface';
+import { BuildMessage, Message } from '../../interface/message.interface';
 import { Subscription } from 'rxjs';
+import { MessageService } from '../../util/service/message.service';
 
 @Component({
   selector: 'app-terminal',
@@ -15,10 +16,12 @@ export class BashComponent implements OnInit, OnDestroy {
   public user: string;
   public isChatEnable: boolean = false;
   public clear: boolean = true;
+  public messages: Message[] = [] as Message[];
   private subscription: Subscription[] = [] as Subscription[];
 
   constructor(
-    private messageService: MessageSocketService,
+    private messageSocketService: MessageSocketService,
+    private messageService: MessageService,
     private userService: UserService,
     private terminalService: TerminalService,
   ) { }
@@ -79,11 +82,14 @@ export class BashComponent implements OnInit, OnDestroy {
     switch (command) {
       case ('msg'):
         this.subscription.push(
-          this.messageService.sendMessage(BuildMessage(args)).subscribe(),
+          this.messageSocketService.sendMessage(BuildMessage(args)).subscribe(),
         );
         this.clearBash();
         break;
       case ('chat'):
+        this.messageService.getAllMessage().subscribe(res => {
+          this.messages = res;
+        });
         this.isChatEnable = true;
         break;
       default:

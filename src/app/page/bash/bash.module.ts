@@ -10,6 +10,7 @@ import {
 } from 'primeng/primeng';
 import { ChatModule } from '../../shared/shared-component/chat/chat.module';
 import { DirectiveModule } from '../../shared/directive/directive.module';
+import { MessageService } from '../../util/service/message.service';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { DirectiveModule } from '../../shared/directive/directive.module';
   providers: [
     TerminalService,
     MessageSocketService,
+    MessageService,
   ],
 })
 export class BashModule {

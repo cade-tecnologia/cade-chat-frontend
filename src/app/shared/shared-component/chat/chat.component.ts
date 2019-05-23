@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Message } from '../../../interface/message.interface';
 import { MessageSocketService } from '../../../util/service/socket/message.socket.service';
 
@@ -8,7 +8,7 @@ import { MessageSocketService } from '../../../util/service/socket/message.socke
 })
 export class ChatComponent implements OnInit {
 
-  public message: Message[] = [] as Message[];
+  @Input() public message: Message[] = [] as Message[];
 
   constructor(
     private messageService: MessageSocketService,
