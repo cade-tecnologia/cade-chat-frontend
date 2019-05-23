@@ -4,5 +4,6 @@ export const ACTION_COMMAND: Command = {
   user: '',
   msg: '',
   chat: '',
+  chatOld: '',
   cl: '',
 };

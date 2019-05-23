@@ -7,6 +7,8 @@ import { UserService } from '../../util/service/user.service';
 import { BuildMessage, Message } from '../../interface/message.interface';
 import { Subscription } from 'rxjs';
 import { MessageService } from '../../util/service/message.service';
+import { reverse } from 'lodash-es';
+import SearchParamsHandle from '../../util/handle/search-params.handle';
 
 @Component({
   selector: 'app-terminal',
@@ -27,6 +29,7 @@ export class BashComponent implements OnInit, OnDestroy {
   ) { }
 
   public ngOnInit(): void {
+    SearchParamsHandle.setParams();
     this.user = this.userService.user;
 
     this.subscription.push(
@@ -87,14 +90,25 @@ export class BashComponent implements OnInit, OnDestroy {
         this.clearBash();
         break;
       case ('chat'):
-        this.messageService.getAllMessage().subscribe(res => {
-          this.messages = res;
-        });
+        SearchParamsHandle.setParams();
+        this.searchParams();
         this.isChatEnable = true;
+        break;
+      case ('chatOld'):
+        const page = SearchParamsHandle.getParams().page + 1;
+        const params = SearchParamsHandle.buildParams(page);
+        SearchParamsHandle.setParams(params);
+        this.searchParams();
         break;
       default:
         break;
     }
+  }
+
+  private searchParams(): void {
+    this.messageService.getAllMessage(SearchParamsHandle.getParams()).subscribe(res => {
+      this.messages = reverse(res.docs);
+    });
   }
 
   private getCommand(input: string): string {
