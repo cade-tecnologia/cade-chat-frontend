@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Message } from '../../../interface/message.interface';
-import { MessageSocketService } from '../../../util/service/message.socket.service';
+import { MessageSocketService } from '../../../util/service/socket/message.socket.service';
 
 @Component({
   selector: 'app-chat',

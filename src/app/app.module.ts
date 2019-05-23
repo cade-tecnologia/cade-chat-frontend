@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { UserService } from './util/service/user.service';
 import { SocketIoModule } from 'ngx-socket-io';
 import { socketConfig } from './config/socket.config';
-import { SocketService } from './util/service/socket.service';
+import { SocketService } from './util/service/socket/socket.service';
 
 @NgModule({
   declarations: [

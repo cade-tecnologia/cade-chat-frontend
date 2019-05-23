@@ -3,7 +3,7 @@ import { BashComponent } from './bash.component';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TerminalService } from 'primeng/components/terminal/terminalservice';
-import { MessageSocketService } from '../../util/service/message.socket.service';
+import { MessageSocketService } from '../../util/service/socket/message.socket.service';
 import {
   TerminalModule,
   ScrollPanelModule,

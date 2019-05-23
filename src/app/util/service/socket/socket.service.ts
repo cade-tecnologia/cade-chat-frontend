@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Observable, Subscriber } from 'rxjs';
-import SocketEventUtil from '../socket-event.util';
+import SocketEventUtil from '../../socket-event.util';
 
 @Injectable()
 export class SocketService {

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { TerminalService } from 'primeng/components/terminal/terminalservice';
-import { MessageSocketService } from '../../util/service/message.socket.service';
+import { MessageSocketService } from '../../util/service/socket/message.socket.service';
 import { MessagesUtil } from '../../util/messages.util';
 import { ACTION_COMMAND } from '../../command/command-list';
 import { UserService } from '../../util/service/user.service';
