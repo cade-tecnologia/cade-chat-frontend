@@ -25,8 +25,20 @@ export class ChatComponent implements OnInit {
     const date = new Date();
 
     // tslint:disable-next-line:no-unused-expression
-    socket.user.valueOf() !== window.localStorage.getItem('user') ?
-      new Notification(`[${socket.user}-${date.getHours()}:${date.getMinutes()}]-${socket.message}`) : null;
+    if (socket.user.valueOf() !== window.localStorage.getItem('user')) {
+      new Notification(`[${socket.user}-${date.getHours()}:${date.getMinutes()}]-${socket.message}`);
+      this.soundNotification();
+    } else {
+      return 
+    }
+     
+  }
+
+  private soundNotification() {
+    const htmlaudio: HTMLAudioElement = new Audio('../../../../media/alert.wav'); 
+    
+    htmlaudio.play();
+
   }
 
 }
